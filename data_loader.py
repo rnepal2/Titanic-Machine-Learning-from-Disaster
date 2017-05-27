@@ -26,7 +26,6 @@ def load_train_data(filename):
 			for row in reader:
 				pclass, sex, age  = row[2], row[4], row[5]
 				sibsp, parch, survived = row[6], row[7], row[1]
-				
 				# Giving correct result as a: y_ = 2 * 1 array 
 				# where y_correct = [survived, died]
 				# whichever (survived or died) is 1 (or larger) will be true.
@@ -38,7 +37,6 @@ def load_train_data(filename):
 				if sex == 'female': sex = 0
 				
 				if age != "": sum_age += float(age)
-				
 				if age == "":
 					pclass, sex  = int(pclass), int(sex), 
 					sibsp, parch = int(sibsp), int(parch)
@@ -75,7 +73,7 @@ def load_train_data(filename):
 			survival.append(data[1])
 		return np.array(variables), np.array(survival)
 
-
+# load_train_data("train.csv")
 # Using the pandas library - makes easy
 # Returns the test data in the required input form
 def load_test_data(filename):
@@ -98,8 +96,11 @@ def load_test_data(filename):
 
 
 # Returns the random batches of data of length n out of total data
-def get_batch(xs_batch, ys_batch, n):
-	random.shuffle(xs_batch)
-	random.shuffle(ys_batch)
-	x_batch, y_batch = xs_batch[0:n], ys_batch[0:n]
-	return x_batch, y_batch
+def get_batch(xs_batch, ys_batch, batch_size):
+	length = len(xs_batch)
+	batch_slice_begin = random.randint(0, length - batch_size)
+	batch_slice_end = batch_slice_begin + batch_size
+	return xs_batch[batch_slice_begin:batch_slice_end], \
+	       ys_batch[batch_slice_begin:batch_slice_end]
+		   
+
