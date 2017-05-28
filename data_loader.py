@@ -13,7 +13,7 @@ import csv
 import random
 
 # Returns the data in required form from the raw data input
-def load_train_data(filename):
+def load_train_data(filename, with_given_age_only=False):
 	data_with_age = []
 	data_without_age = []
 	with open(filename, 'r') as file:
@@ -60,11 +60,14 @@ def load_train_data(filename):
 			average_age = sum_age/(len(data_with_age))
 			for i in range(len(data_without_age)):
 				data_without_age[i][0][2] = average_age
-			# Combine both data lists
-			joined_data = data_with_age + data_without_age
+			# returns either only data with given age or 	
+			# combined data with engineered age data 
+			if with_given_age_only:
+				joined_data = data_with_age
+			else:	
+				joined_data = data_with_age + data_without_age
 		finally:
 			file.close()
-			
 		# Separating variables and survival into different lists 
 		# and returning in the required form
 		variables, survival = [], []
