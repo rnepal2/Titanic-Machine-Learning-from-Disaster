@@ -10,16 +10,29 @@ os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 # Importing function from another python file in directory
 from data_loader import load_train_data, get_batch, load_test_data
 # Tensorflow version:
-print("Tensorflow version is: ", tf.__version__) # tf version: 1.1.0
+print("Tensorflow version is: ", tf.__version__) # written with tf version: 1.1.0
 #############################################################
 
-# Hyperparameters
+# Defining default hyperparameters
 pkeep = 0.75 # probablity of neurons to keep.
 learning_rate = 0.0005
 training_iterations = 10000 # Training the model n times
-batch_size = 200
+batch_size = 100
 checkpoint_every = 1000
 train_with_only_known_age_data = True
+
+# Number of neurons in hidden layer
+# Sizes of each layers (input, 4 hidden and output)
+# initial input x_input variables = 5
+L = 100
+M = 50
+N = 25
+O = 10
+# No need  to use these many layers and large number of neurons.
+# I am just trying different possibilities to increase the accuracy by 
+# trying all the possible ways, but it seems that the accuracy can't go beyond about 85%
+# in average using this model. 
+# Probably: Engineering more dependent variables from the given data can help.
 
 # Modeling parameters
 tf.flags.DEFINE_float('learning_rate', learning_rate, 'Initial learning rate (default: 0.0005)')
@@ -29,7 +42,7 @@ tf.flags.DEFINE_integer('batch_size', batch_size, 'size of the input batch (defa
 tf.flags.DEFINE_integer('checkpoint_every', checkpoint_every, 'Save model every this many steps (default: 1000)')
 tf.flags.DEFINE_boolean('train_with_only_known_age_data', train_with_only_known_age_data, \
 	'training with data with known age (default: True)')
-tf.flags.DEFINE_integer("hidden_layer_neurons", {'L': 8, 'M': 32, 'N': 16, 'O': 8}, "Number of neurons in the hidden layers")
+tf.flags.DEFINE_integer("hidden_layer_neurons", {'L': L, 'M': M, 'N': N, 'O': O}, "Number of neurons in the hidden layers")
 
 # printing the default hyperparameters used
 FLAGS = tf.flags.FLAGS
@@ -73,13 +86,6 @@ with tf.name_scope("placeholders") as scope:
 	x = tf.placeholder(tf.float32, shape=[None, 5])
 	y_ = tf.placeholder(tf.float32, shape=[None, 2])
 
-# Adding three hidden layers
-# Sizes of each layers (input, 4 hidden and output)
-# initial input x_input variables = 5
-L = 100
-M = 50
-N = 25
-O = 10
 
 # Defining weight and bias variables
 def weight_variable(shape, name):
