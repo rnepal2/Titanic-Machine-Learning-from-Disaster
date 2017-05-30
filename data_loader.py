@@ -82,14 +82,11 @@ def load_train_data(filename, with_given_age_only=False):
 def load_test_data(filename):
     df = pd.read_csv(filename)
     df = pd.DataFrame(df, columns=["Pclass", "Sex", "Age", "SibSp", "Parch"])
-    
     # Replacing the NaN age with average age of passengers
     average_age = df["Age"].mean()
     df["Age"].fillna(average_age, inplace=True)
-
     # Replacing Male: 1 and Female: 0
     df["Sex"] = df["Sex"].map({'male': 1, 'female': 0})
-
     # Coverting and returning in the x_data/x_batch required form
     x_data = []
     x_matrix = df.as_matrix()
@@ -105,5 +102,17 @@ def get_batch(xs_batch, ys_batch, batch_size):
 	batch_slice_end = batch_slice_begin + batch_size
 	return xs_batch[batch_slice_begin:batch_slice_end], \
 	       ys_batch[batch_slice_begin:batch_slice_end]
-		   
+	# The slice begin and end are same on both xs_batch and ys_batch,
+	# so the xs_batch and corresponding ys_batch are not mixed up 
+	# in this case. Need to be careful here!
+	# To do random shuffling of the data, xs_batch and ys_batch should be 
+	# combined first, here input of this function are separate. 
+	# I am doing random slicing which is not very random for larger batch size. 
+
+if __name__ == '__main__':
+	xs_input, ys_input = load_train_data("train.csv", True)
+	x, y = get_batch(xs_input, ys_input, 10)
+	print("An example input of batch size of 10: ", x)
+	print("And corresponding y results: ", y)
+	#load_test_data("test.csv")
 
