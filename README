@@ -1,7 +1,11 @@
 This is the solution of famous machine learning problem taken from 
-kaggle.com, Titanic: Machine Learning from Disaster.
+kaggle.com, Titanic: Machine Learning from Disaster. The detail of 
+this problem can be seen at:
 
-I am solving this problem by using TensorFlow.
+https://www.kaggle.com/c/titanic
 
-This solution is under development. I am doing this for my practice and 
-will be continuously  updating it untill the solution becomes complete.
+I am solving this problem by using the google's machine learning library
+called tensorflow. This is a crude implementation of tensorflow in this 
+problem done as a part of my tensorflow learning. The accuracy of the 
+trained model is about 82% in average and it can be possibly improved by
+different ways. I will probably come up with better model later.
