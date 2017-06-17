@@ -7,5 +7,5 @@ https://www.kaggle.com/c/titanic
 I am solving this problem by using the google's machine learning library
 called tensorflow. This is a crude implementation of tensorflow in this 
 problem done as a part of my tensorflow learning. The accuracy of the 
-trained model is about 82% in average and it can be possibly improved by
-different ways. I will probably come up with better model later.
+trained model is about 82% in average and there are many possible ways 
+to improve it.  
